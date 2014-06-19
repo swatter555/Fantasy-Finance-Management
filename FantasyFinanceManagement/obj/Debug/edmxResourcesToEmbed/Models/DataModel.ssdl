@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="UserDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Portfolios">
+    <Key>
+      <PropertyRef Name="EntryId" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Symbol" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Shares" Type="int" Nullable="false" />
+    <Property Name="EntryId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Transactions">
+    <Key>
+      <PropertyRef Name="Trans Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Symbol" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Shares" Type="int" Nullable="false" />
+    <Property Name="Price" Type="money" Nullable="false" />
+    <Property Name="Total" Type="money" Nullable="false" />
+    <Property Name="Time" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Trans Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Hash" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Salt" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Cash" Type="money" Nullable="false" />
+    <Property Name="Deposits" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="UserDatabaseModelStoreContainer">
+    <EntitySet Name="Portfolios" EntityType="Self.Portfolios" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

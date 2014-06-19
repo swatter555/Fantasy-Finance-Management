@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>@ViewBag.Title</title>
+
+        <link href='http://fonts.googleapis.com/css?family=Questrial|Anton|Yanone+Kaffeesatz:400,300,700,200|Francois+One' rel='stylesheet' type='text/css'>
+
+        @Styles.Render("~/bundles/css")
+        @Scripts.Render("~/bundles/modernizr")
+
+    </head>
+    <body>
+        <div id="wrapper">
+            <header>
+                <div id="header_links">
+                    
+                    @{
+                        HttpCookie cookie = Request.Cookies["0101111001010010110"];
+
+                        if (cookie != null)
+                        {
+                            ViewBag.User = cookie.Value;
+                            ViewBag.Cookie = true; 
+                        }
+                        else
+                        {
+                            ViewBag.Cookie = false; 
+                        }
+                    }
+
+                    @if (ViewBag.Cookie == true) {@Html.ActionLink("Portfolio", "Index", "Portfolio")}
+                    @if (ViewBag.Cookie == true) {@Html.ActionLink("Buy", "Index", "Buy")}
+                    @if (ViewBag.Cookie == true) {@Html.ActionLink("Sell", "Index", "Sell")}
+                    @if (ViewBag.Cookie == true) {@Html.ActionLink("Deposit", "Index", "Deposit")}
+                    @if (ViewBag.Cookie == true) {@Html.ActionLink("History", "Index", "History")}
+                    @if (ViewBag.Cookie == true) {@Html.ActionLink("Logout", "Logout", "LogIn")}                                                                               
+                </div>
+                <div id="header_title">
+                    Fantasy Finance $
+                </div>
+                <div id="header_text">
+                    Put together a theoretical stock portfolio and try to make money
+                </div>
+                <div id="header_user">
+                    @if (ViewBag.Cookie == true) { <span class="glyphicon glyphicon-user"></span> }
+                    @if (ViewBag.Cookie == true) {@ViewBag.User}
+                    
+                </div>
+            </header>
+
+            <div id="body_div">
+                @RenderBody()
+            </div>
+    
+            <footer>
+                Copyright &#169; Robert Lohaus @DateTime.Today.Year
+            </footer>
+      
+            @Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/bootstrap")
+            @RenderSection("scripts", required: false)
+        </div>
+    </body>
+</html>

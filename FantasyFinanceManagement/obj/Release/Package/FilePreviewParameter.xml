@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="fantasyfinance" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Robert\\documents\\visual\ studio\ 2013\\Projects\\FantasyFinanceManagement\\FantasyFinanceManagement\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Robert\\documents\\visual\ studio\ 2013\\Projects\\FantasyFinanceManagement\\FantasyFinanceManagement\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="FantasyFinanceDatabaseEntities-Web.config Connection String" description="" value="metadata=res://*/Models.UserDataModel.csdl|res://*/Models.UserDataModel.ssdl|res://*/Models.UserDataModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;Server=tcp:y5v8t84nz7.database.windows.net,1433;Database=FantasyFinanceDatabase;User ID=swatter555@y5v8t84nz7;Password=Baseba111;Trusted_Connection=False;Encrypt=True;Connection Timeout=30&quot;" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Robert\\documents\\visual\ studio\ 2013\\Projects\\FantasyFinanceManagement\\FantasyFinanceManagement\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='FantasyFinanceDatabaseEntities']/@connectionString" />
+  </parameter>
+</parameters>

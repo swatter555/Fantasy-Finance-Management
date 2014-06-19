@@ -1,0 +1,45 @@
+﻿@model FantasyFinanceManagement.Models.RegisterSubmitDataModel
+
+@using (Html.BeginForm())
+{
+    <div id="valid_summary">
+        @Html.ValidationSummary()
+    </div>
+
+    <fieldset id="fieldset_login">
+
+        <div id="info_div">
+            Please enter your personal details to create an account
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", placeholder = "First Name" })
+        </div>
+
+        <div class="form-group">
+            @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", placeholder = "LastName" })
+        </div>
+
+        <div class="form-group">
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Email Address" })
+        </div>
+
+        <div class="form-group">
+            @Html.PasswordFor(model => model.Hash, new { @class = "form-control", placeholder = "Password" })
+        </div>
+
+        <div class="form-group">
+            @Html.PasswordFor(model => model.Salt, new { @class = "form-control", placeholder = "Re-enter password" })
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-default">Register</button>
+        </div>
+    </fieldset>
+}
+
+<div>
+    or @Html.ActionLink("login", "Index", "LogIn") to an account
+</div>

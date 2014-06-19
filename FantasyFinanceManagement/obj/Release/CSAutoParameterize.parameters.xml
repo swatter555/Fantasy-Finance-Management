@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="FantasyFinanceDatabaseEntities-Web.config Connection String" description="FantasyFinanceDatabaseEntities Connection String used in web.config by the application to access the database." defaultValue="Server=tcp:y5v8t84nz7.database.windows.net,1433;Database=FantasyFinanceDatabase;User ID=swatter555@y5v8t84nz7;Password=Baseba111;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Robert\\documents\\visual\ studio\ 2013\\Projects\\FantasyFinanceManagement\\FantasyFinanceManagement\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='FantasyFinanceDatabaseEntities']/@connectionString" />
+  </parameter>
+</parameters>

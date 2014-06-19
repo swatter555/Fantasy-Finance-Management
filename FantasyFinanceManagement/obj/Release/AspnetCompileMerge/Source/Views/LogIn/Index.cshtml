@@ -1,0 +1,32 @@
+﻿@model FantasyFinanceManagement.Models.LoginSubmitModel
+
+@using (Html.BeginForm())
+{
+    <div id="valid_summary">
+        @Html.ValidationSummary()
+    </div>
+
+    <div id="info_div">
+        Login to your account to manage your stocks
+    </div>
+
+    <br />
+    
+    <fieldset id="fieldset_login">
+        <div class="form-group">
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Email Address" })
+        </div>
+
+        <div class="form-group">
+            @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password" })
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-default">Log In</button>
+        </div>
+    </fieldset>
+}
+
+<div>
+    or @Html.ActionLink("register", "Index", "Register") for an account
+</div>

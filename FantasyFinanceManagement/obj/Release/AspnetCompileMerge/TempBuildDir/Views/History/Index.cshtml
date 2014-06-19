@@ -1,0 +1,53 @@
+﻿<div id="info_div">
+    Transaction History
+</div>
+
+@using (var db = new FantasyFinanceManagement.Models.FantasyFinanceDatabaseEntities())
+{
+    var email = Request.Cookies["0101111001010010110"].Value;
+    var user = db.Users.FirstOrDefault(u => u.Email == email);
+
+    // Perform a query on portfolio table to determine if user already owns the stock
+    var pQuery = from history in db.Transactions
+                 where history.Id == user.Id
+                 select history;
+    
+    <div id="portfolio_table">
+        <div class="col-xs-2">
+        </div>
+
+        <div class="col-xs-8">
+            <table class="table table-striped">
+
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Type</th>
+                        <th>Shares</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var result in pQuery)
+                    {
+                        <tr>
+                            <td>@(new HtmlString(result.Symbol))</td>
+                            <td>@(new HtmlString(result.Type))</td>
+                            <td>@(new HtmlString(result.Shares.ToString()))</td>
+                            <td>@(new HtmlString("$" + Decimal.Round(result.Price, 2)))</td>
+                            <td>@(new HtmlString("$" + Decimal.Round(result.Total, 2)))</td>
+                            <td>@(new HtmlString(result.Time))</td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+
+        <div class="col-xs-2">
+        </div>
+    </div>
+}

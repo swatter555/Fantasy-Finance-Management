@@ -1,0 +1,13 @@
+﻿@model FantasyFinanceManagement.Helpers.ErrorMessage
+
+@{
+    ViewBag.Title = "Fantasy Finance";
+}
+
+<div id="info_div">
+    Sorry, there was an error proccessing your request.
+</div>
+
+<h4>
+    Error Detail: @Model.GetError()
+</h4>

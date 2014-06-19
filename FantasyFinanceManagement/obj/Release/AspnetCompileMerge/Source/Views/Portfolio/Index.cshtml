@@ -1,0 +1,139 @@
+﻿@model FantasyFinanceManagement.Models.PortfolioSubmitModel
+
+@using (Html.BeginForm())
+{
+    <div id="valid_summary">
+        @Html.ValidationSummary()
+    </div>
+
+    <fieldset>
+        <div class="form-group">
+            @Html.TextBoxFor(model => model.Symbol, new { @class = "form-control", placeholder = "Enter Symbol" })
+            <button type="submit" class="btn btn-default">Get Qoute</button>
+        </div>
+    </fieldset>
+}
+
+<div id="symbol_data" class="row">
+    
+    @if (Session["SymbolData"] != null)
+    {
+        var symbolData = Session["SymbolData"] as FantasyFinanceManagement.Helpers.StockSymbolData;
+        
+        <div class="row">
+            
+            <div class="col-xs-5">
+            </div>
+            
+            <div class="col-xs-1">
+                @(new HtmlString("Symbol: " + symbolData.Symbol))
+                <br />
+                @(new HtmlString("Name: " + symbolData.Name))
+                <br />
+                @(new HtmlString("Bid: $" + symbolData.Bid))
+                <br />
+                @(new HtmlString("Ask: $" + symbolData.Ask))
+            </div>
+            
+            <div class="col-xs-6">
+                @(new HtmlString("Open: $" + symbolData.Open))
+                <br />
+                @(new HtmlString("Prev Close: $" + symbolData.PreviousClose))
+                <br />
+                @(new HtmlString("Last: $" + symbolData.Last))
+            </div>
+
+        </div>
+    }
+</div>
+
+<br />
+
+@using (var db = new FantasyFinanceManagement.Models.FantasyFinanceDatabaseEntities())
+{
+    var email = Request.Cookies["0101111001010010110"].Value;
+    var user = db.Users.FirstOrDefault(u => u.Email == email);
+    var totalAssets = user.Cash;
+    decimal openAssets = user.Cash;
+    decimal prevAssets = user.Cash;
+
+    // Perform a query on portfolio table to determine if user already owns the stock
+    var pQuery = from portfolio in db.Portfolios
+                 where portfolio.Id == user.Id
+                 select portfolio;
+    
+    <div id="portfolio_table">
+        <div class="col-xs-2">
+        </div>
+
+        <div class="col-xs-8">
+            <table class="table table-striped">
+
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Name</th>
+                        <th>Shares</th>
+                        <th>Prev Close</th>
+                        <th>Close</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                   @foreach (var result in pQuery)
+                   {
+                       var stockData = new FantasyFinanceManagement.Helpers.StockSymbolData(result.Symbol);
+                       var total = stockData.Last * result.Shares;
+                       var openTotal = stockData.Open * result.Shares;
+                       var prevTotal = stockData.PreviousClose * result.Shares;
+                       totalAssets += total;
+                       openAssets += openTotal;
+                       prevAssets += prevTotal;
+                       
+                       <tr>
+                           <td>@(new HtmlString(stockData.Symbol))</td>
+                           <td>@(new HtmlString(stockData.Name))</td>
+                           <td>@(new HtmlString(result.Shares.ToString()))</td>
+                           <td>@(new HtmlString("$" + stockData.PreviousClose))</td>
+                           <td>@(new HtmlString("$" + stockData.Last))</td>
+                           <td>@(new HtmlString("$" + total))</td>
+                       </tr>
+                   }
+                </tbody>
+
+            </table>
+        </div>
+
+        <div class="col-xs-2">
+        </div>
+    </div>
+
+    <div id="portfolio_info">
+        <div class="row">
+
+            <div class="col-md-4 col-md-offset-2" style="border: 1px solid green; background-color: lightgreen">
+                @(new HtmlString("Last Name: " + user.LastName))
+                <br />
+                @(new HtmlString("First Name: " + user.FirstName))
+                <br />
+                @(new HtmlString("Cash: $ " + Decimal.Round(user.Cash, 2)))
+                <br />
+                @(new HtmlString("Total Deposits: $" +  Decimal.Round(user.Deposits, 2)))
+            </div>
+
+            <div class="col-xs-4" style="border: 1px solid green; background-color: lightgreen">
+                @(new HtmlString("Total Assets: $" + Decimal.Round(totalAssets, 2)))
+                <br />
+                @(new HtmlString("Today +/-: $" + Decimal.Round(openAssets - user.Deposits, 2)))
+                <br />
+                @(new HtmlString("Yesturday +/-: $" + Decimal.Round(prevAssets - user.Deposits, 2)))
+                <br />
+                @(new HtmlString("Total +/-: $" + Decimal.Round(totalAssets- user.Deposits, 2)))
+            </div>
+
+            <div class="col-xs-2">
+            </div>
+        </div>
+    </div>
+}

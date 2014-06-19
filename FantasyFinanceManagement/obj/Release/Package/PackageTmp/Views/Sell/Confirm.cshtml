@@ -1,0 +1,17 @@
+﻿@using (Html.BeginForm())
+{
+    var data = Session["Transaction"] as FantasyFinanceManagement.Models.TransactionData;
+    string str = "Are you sure you wish to sell " + data.Shares.ToString() + "  shares of " + data.Symbol +
+                 " at $" + data.Price.ToString() + " per share" + " for $" + data.Total.ToString() + "?";
+
+    <div id="info_div">
+        @(new HtmlString(str))
+    </div>
+
+    <fieldset>
+        <div class="form-group">
+            <button name="button" class="btn btn-default" value="confirm">Confirm</button>
+            <button name="button" class="btn btn-default" value="cancel">Cancel</button>
+        </div>
+    </fieldset>
+}

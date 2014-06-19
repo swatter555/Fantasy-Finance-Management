@@ -1,0 +1,73 @@
+﻿@model FantasyFinanceManagement.Models.BuySubmitModel
+
+<div id="info_div">
+    Please enter the stock symbol and the numbers of shares you wish to sell
+</div>
+
+@using (Html.BeginForm())
+{
+    <div id="valid_summary">
+        @Html.ValidationSummary()
+    </div>
+
+    <fieldset>
+        <div class="form-group">
+            @Html.TextBoxFor(model => model.Symbol, new { @class = "form-control", placeholder = "Symbol" })
+            @Html.TextBoxFor(model => model.Shares, new { @class = "form-control", placeholder = "Shares to Sell" })
+            <button type="submit" class="btn btn-default">Sell</button>
+        </div>
+    </fieldset>
+}
+
+@using (var db = new FantasyFinanceManagement.Models.FantasyFinanceDatabaseEntities())
+{
+    var email = Request.Cookies["0101111001010010110"].Value;
+    var user = db.Users.FirstOrDefault(u => u.Email == email);
+
+    // Perform a query on portfolio table to determine if user already owns the stock
+    var pQuery = from portfolio in db.Portfolios
+                 where portfolio.Id == user.Id
+                 select portfolio;
+
+    <div id="portfolio_table">
+        <div class="col-xs-2">
+        </div>
+
+        <div class="col-xs-8">
+            <table class="table table-striped">
+
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Name</th>
+                        <th>Shares</th>
+                        <th>Prev Close</th>
+                        <th>Close</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var result in pQuery)
+                    {
+                        var stockData = new FantasyFinanceManagement.Helpers.StockSymbolData(result.Symbol);
+                        var total = stockData.Last * result.Shares;
+                        
+                        <tr>
+                            <td>@(new HtmlString(stockData.Symbol))</td>
+                            <td>@(new HtmlString(stockData.Name))</td>
+                            <td>@(new HtmlString(result.Shares.ToString()))</td>
+                            <td>@(new HtmlString("$" + stockData.PreviousClose))</td>
+                            <td>@(new HtmlString("$" + stockData.Last))</td>
+                            <td>@(new HtmlString("$" + total))</td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+
+        <div class="col-xs-2">
+        </div>
+    </div>
+}
